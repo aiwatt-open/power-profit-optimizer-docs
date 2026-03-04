@@ -12,6 +12,7 @@
 
     - 数据类型：json
 
+
       | 参数 | 类型 | 是否必填 | 描述 | 范围 | 样例 |
       | :---: | :---: | :------: | :---: | :---: | :---: |
       | name | string | 是 | 设备名称 | - | "光伏设备1" |
@@ -21,7 +22,19 @@
       | max_power | float | 否 | 最大功率（单位：kW） | (0, +∞) | 50.0 |
       | energy_conversion_efficiency | float | 否 | 能量转换效率（%） | (0, 100] | 85.5 |
       | max_soc | float | 否 | 最大SOC（%） | (0, 100] | 90.0 |
-      | min_soc | float | 否 | 最小SOC（%） | (0, 100] | 10.0 |
+      | min_soc | float | 否 | 最小SOC（%） | [0, 100] | 10.0 |
+      | panel_tilt | float | 否 | 光伏板倾角（°）<br>水平=0，垂直=90 | [0, 90] | 30.0 |
+      | panel_azimuth | float | 否 | 光伏板方位角（°）<br>北=0, 东=90, 南=180,西=270 | [0, 360) | 180.0 |
+
+
+      可选字段说明: 
+      
+      - **PV（光伏）**
+        - 必填: `total_capacity`、`max_power`
+        - 可选: `panel_tilt`、`panel_azimuth`
+      - **BESS（储能）**：
+        - 必填:  `total_capacity`、`max_power`、`energy_conversion_efficiency`、`min_soc`、`max_soc`
+      - **Load（负载）**：无必填
 
     - 样例
 
@@ -32,9 +45,8 @@
         "site_id": 1,
         "total_capacity": 100.0,
         "max_power": 50.0,
-        "energy_conversion_efficiency": 85.5,
-        "max_soc": 90.0,
-        "min_soc": 10.0
+        "panel_tilt": 30.0,
+        "panel_azimuth": 180.0
       }
       ```
 
@@ -53,6 +65,8 @@
     | energy_conversion_efficiency | float | 否 | 能量转换效率（%） | 85.5 |
     | max_soc | float | 否 | 最大SOC（%） | 90.0 |
     | min_soc | float | 否 | 最小SOC（%） | 10.0 |
+    | panel_tilt | float | 否 | 光伏板倾角（°） | 30.0 |
+    | panel_azimuth | float | 否 | 光伏板方位角（°） | 180.0 |
     | created_at | datetime | 是 | 创建时间 | "2025-01-06T10:00:00" |
     | updated_at | datetime | 否 | 更新时间 | "2025-01-06T10:00:00" |
 
@@ -66,9 +80,11 @@
       "site_id": 1,
       "total_capacity": 100.0,
       "max_power": 50.0,
-      "energy_conversion_efficiency": 85.5,
-      "max_soc": 90.0,
-      "min_soc": 10.0,
+      "energy_conversion_efficiency": null,
+      "max_soc": null,
+      "min_soc": null,
+      "panel_tilt": 30.0,
+      "panel_azimuth": 180.0,
       "created_at": "2025-01-06T10:00:00",
       "updated_at": null
     }
@@ -122,6 +138,8 @@
     | energy_conversion_efficiency | float | 否 | 能量转换效率（%） | 85.5 |
     | max_soc | float | 否 | 最大SOC（%） | 90.0 |
     | min_soc | float | 否 | 最小SOC（%） | 10.0 |
+    | panel_tilt | float | 否 | 光伏板倾角（°） | 30.0 |
+    | panel_azimuth | float | 否 | 光伏板方位角（°） | 180.0 |
     | created_at | datetime | 是 | 创建时间 | "2025-01-06T10:00:00" |
     | updated_at | datetime | 否 | 更新时间 | "2025-01-06T10:00:00" |
 
@@ -137,9 +155,11 @@
           "site_id": 1,
           "total_capacity": 100.0,
           "max_power": 50.0,
-          "energy_conversion_efficiency": 85.5,
-          "max_soc": 90.0,
-          "min_soc": 10.0,
+          "energy_conversion_efficiency": null,
+          "max_soc": null,
+          "min_soc": null,
+          "panel_tilt": 30.0,
+          "panel_azimuth": 180.0,
           "created_at": "2025-01-06T10:00:00",
           "updated_at": null
         }
@@ -184,6 +204,8 @@
     | energy_conversion_efficiency | float | 否 | 能量转换效率（%） | 85.5 |
     | max_soc | float | 否 | 最大SOC（%） | 90.0 |
     | min_soc | float | 否 | 最小SOC（%） | 10.0 |
+    | panel_tilt | float | 否 | 光伏板倾角（°） | 30.0 |
+    | panel_azimuth | float | 否 | 光伏板方位角（°） | 180.0 |
     | created_at | datetime | 是 | 创建时间 | "2025-01-06T10:00:00" |
     | updated_at | datetime | 否 | 更新时间 | "2025-01-06T10:00:00" |
 
@@ -197,9 +219,11 @@
       "site_id": 1,
       "total_capacity": 100.0,
       "max_power": 50.0,
-      "energy_conversion_efficiency": 85.5,
-      "max_soc": 90.0,
-      "min_soc": 10.0,
+      "energy_conversion_efficiency": null,
+      "max_soc": null,
+      "min_soc": null,
+      "panel_tilt": 30.0,
+      "panel_azimuth": 180.0,
       "created_at": "2025-01-06T10:00:00",
       "updated_at": null
     }
@@ -237,7 +261,11 @@
       | max_power | float | 否 | 最大功率（单位：kW） | (0, +∞) | 50.0 |
       | energy_conversion_efficiency | float | 否 | 能量转换效率（%） | (0, 100] | 85.5 |
       | max_soc | float | 否 | 最大SOC（%） | (0, 100] | 90.0 |
-      | min_soc | float | 否 | 最小SOC（%） | (0, 100] | 10.0 |
+      | min_soc | float | 否 | 最小SOC（%） | [0, 100] | 10.0 |
+      | panel_tilt | float | 否 | 光伏板倾角（°）<br>水平=0，垂直=90 | [0, 90] | 30.0 |
+      | panel_azimuth | float | 否 | 光伏板方位角（°）<br>北=0, 东=90, 南=180, 西=270 | [0, 360) | 180.0 |
+
+    - 说明：Body 字段与 [POST 创建设备](#post-v1devices) 一致，均为可选（按需更新）；各类型必填/可选见上文「可选字段说明」。
 
     - 样例
 
@@ -263,6 +291,8 @@
     | energy_conversion_efficiency | float | 否 | 能量转换效率（%） | 85.5 |
     | max_soc | float | 否 | 最大SOC（%） | 90.0 |
     | min_soc | float | 否 | 最小SOC（%） | 10.0 |
+    | panel_tilt | float | 否 | 光伏板倾角（°） | 30.0 |
+    | panel_azimuth | float | 否 | 光伏板方位角（°） | 180.0 |
     | created_at | datetime | 是 | 创建时间 | "2025-01-06T10:00:00" |
     | updated_at | datetime | 否 | 更新时间 | "2025-01-06T11:00:00" |
 
@@ -276,9 +306,11 @@
       "site_id": 1,
       "total_capacity": 100.0,
       "max_power": 60.0,
-      "energy_conversion_efficiency": 85.5,
-      "max_soc": 90.0,
-      "min_soc": 10.0,
+      "energy_conversion_efficiency": null,
+      "max_soc": null,
+      "min_soc": null,
+      "panel_tilt": 30.0,
+      "panel_azimuth": 180.0,
       "created_at": "2025-01-06T10:00:00",
       "updated_at": "2025-01-06T11:00:00"
     }
@@ -310,13 +342,13 @@
 
     | 参数 | 类型 | 是否必填 | 描述 | 样例 |
     | :---: | :---: | :------: | :---: | :---: |
-    | message | string | 是 | 响应消息 | "设备已删除" |
+    | message | string | 是 | 响应消息 | "Device deleted" |
 
   - 样例
 
     ```json
     {
-      "message": "设备已删除"
+      "message": "Device deleted"
     }
     ```
 

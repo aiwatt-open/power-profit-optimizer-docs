@@ -17,7 +17,7 @@
       | device_id | int | 是 | 设备ID | (0, +∞) | 1 |
       | timestamp | int | 是 | Unix 时间戳（秒） | - | 1736143200 |
       | value | float | 是 | 功率值（kW） | [0, +∞) | 50.5 |
-      | status | string | 否 | 状态 | - | "normal" |
+      | abnormal | bool | 否 | 是否异常：true=不正常，false=正常 | - | false |
 
     - 样例
 
@@ -26,7 +26,7 @@
         "device_id": 1,
         "timestamp": 1736143200,
         "value": 50.5,
-        "status": "normal"
+        "abnormal": false
       }
       ```
 
@@ -40,7 +40,7 @@
     | device_id | int | 是 | 设备ID | 1 |
     | timestamp | int | 是 | Unix 时间戳（秒） | 1736143200 |
     | value | float | 是 | 功率值（kW） | 50.5 |
-    | status | string | 是 | 状态 | "normal" |
+    | abnormal | bool | 否 | 是否异常：true=不正常，false=正常 | false |
     | created_at | datetime | 是 | 创建时间 | "2025-01-06T10:00:00" |
     | updated_at | datetime | 否 | 更新时间 | "2025-01-06T10:00:00" |
 
@@ -52,7 +52,7 @@
       "device_id": 1,
       "timestamp": 1736143200,
       "value": 50.5,
-      "status": "normal",
+      "abnormal": false,
       "created_at": "2025-01-06T10:00:00",
       "updated_at": null
     }
@@ -86,7 +86,7 @@
       | :---: | :---: | :------: | :---: | :---: | :---: |
       | timestamp | int | 是 | Unix 时间戳（秒） | - | 1736143200 |
       | value | float | 是 | 功率值（kW） | [0, +∞) | 50.5 |
-      | status | string | 否 | 状态 | - | "normal" |
+      | abnormal | bool | 否 | 是否异常：true=不正常，false=正常 | - | false |
 
     - 样例
 
@@ -97,7 +97,7 @@
           {
             "timestamp": 1736143200,
             "value": 50.5,
-            "status": "normal"
+            "abnormal": false
           }
         ]
       }
@@ -162,7 +162,7 @@
     | device_id | int | 是 | 设备ID | 1 |
     | timestamp | int | 是 | Unix 时间戳（秒） | 1736143200 |
     | value | float | 是 | 功率值（kW） | 50.5 |
-    | status | string | 是 | 状态 | "normal" |
+    | abnormal | bool | 否 | 是否异常：true=不正常，false=正常 | false |
     | created_at | datetime | 是 | 创建时间 | "2025-01-06T10:00:00" |
     | updated_at | datetime | 否 | 更新时间 | "2025-01-06T10:00:00" |
 
@@ -176,7 +176,7 @@
           "device_id": 1,
           "timestamp": 1736143200,
           "value": 50.5,
-          "status": "normal",
+          "abnormal": false,
           "created_at": "2025-01-06T10:00:00",
           "updated_at": null
         }
@@ -207,11 +207,15 @@
 
     | 参数 | 类型 | 是否必填 | 描述 | 范围 | 样例 |
     | :---: | :---: | :------: | :---: | :---: | :---: |
-    | device_id | int | 是 | 设备ID（必须是储能设备） | (0, +∞) | 1 |
-    | current_cap | float | 是 | 当前容量 | [0, +∞) | 50.0 |
+    | site_id | int | 是 | 站点ID | (0, +∞) | 1 |
+    | current_cap | float | 是 | 储能当前总电量（kWh） | [0, +∞) | 50.0 |
     | start_time | int | 是 | 开始时间，Unix 时间戳（秒） | - | 1736143200 |
     | gap_minutes | int | 是 | 时间间隔（分钟） | (0, +∞) | 15 |
-    | mode | string | 否 | 优化模式 | 1/2/3 | "1" |
+    | mode | int | 否 | 优化模式 | 1/2/3 | 1 |
+    | export_limit_kw | float | 否 | 防逆流/外送限制（kW），不传或 null=不启用<br>正数表示从电网取电，负数表示放电到电网 | (-∞, +∞) | 0.0 |
+    | demand_limit_kw | float | 否 | 固定软需量上限（kW），不传或 null=不启用 | [0, +∞) | - |
+    | demand_penalty | float | 否 | 超需量惩罚（货币单位/kWh） | [0, +∞) | 200.0 |
+    | c_cycle | float | 否 | 循环惩罚系数（货币单位/kWh 吞吐量） | [0, +∞) | 0.02 |
 
   - Body参数
 
