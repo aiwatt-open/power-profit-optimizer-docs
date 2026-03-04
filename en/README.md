@@ -9,6 +9,7 @@ API documentation for the Power Profit Optimizer system. Use these docs to integ
 | [site.md](site.md) | Site Management | CRUD for sites |
 | [device.md](device.md) | Device Management | CRUD for devices |
 | [power.md](power.md) | Power Data | Power records, max profit optimization |
+| [weather.md](weather.md) | Weather Data | Weather and solar radiation data |
 
 ---
 

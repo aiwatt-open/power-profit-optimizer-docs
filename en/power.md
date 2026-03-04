@@ -17,7 +17,7 @@
       | device_id | int | yes | Device ID | (0, +∞) | 1 |
       | timestamp | int | yes | Unix timestamp (seconds) | - | 1736143200 |
       | value | float | yes | Power (kW) | [0, +∞) | 50.5 |
-      | status | string | no | Status | - | "normal" |
+      | abnormal | bool | no | true=abnormal, false=normal | - | false |
 
   - Example
 
@@ -26,13 +26,13 @@
       "device_id": 1,
       "timestamp": 1736143200,
       "value": 50.5,
-      "status": "normal"
+      "abnormal": false
     }
     ```
 
 - Response
 
-  - Data type: json (record with id, device_id, timestamp, value, status, created_at, updated_at)
+  - Data type: json (record with id, device_id, timestamp, value, abnormal, created_at, updated_at)
 
 - Error codes
 
@@ -56,7 +56,7 @@
       | device_id | int | yes | Device ID | (0, +∞) | 1 |
       | data | array | yes | List of records | - | - |
 
-      Each record: timestamp (int), value (float), status (string, optional)
+      Each record: timestamp (int), value (float), abnormal (bool, optional)
 
   - Example
 
@@ -67,7 +67,7 @@
         {
           "timestamp": 1736143200,
           "value": 50.5,
-          "status": "normal"
+          "abnormal": false
         }
       ]
     }
@@ -108,7 +108,7 @@
 
   - Data type: json (paginated: items, total, page, page_size, total_pages)
 
-  - Each item: id, device_id, timestamp, value, status, created_at, updated_at
+  - Each item: id, device_id, timestamp, value, abnormal, created_at, updated_at
 
 - Error codes
 
@@ -129,10 +129,14 @@
     | Param | Type | Required | Description | Range | Example |
     | :---: | :---: | :------: | :---: | :---: | :---: |
     | device_id | int | yes | Device ID (must be BESS) | (0, +∞) | 1 |
-    | current_cap | float | yes | Current capacity | [0, +∞) | 50.0 |
+    | current_cap | float | yes | Current capacity (kWh) | [0, +∞) | 50.0 |
     | start_time | int | yes | Start time (Unix seconds) | - | 1736143200 |
     | gap_minutes | int | yes | Time gap (minutes) | (0, +∞) | 15 |
-    | mode | string | no | Optimization mode | 1/2/3 | "1" |
+    | mode | int | no | Optimization mode | 1/2/3 | 1 |
+    | export_limit_kw | float | no | Export limit (kW), 0=no export | [0, +∞) | 0.0 |
+    | demand_limit_kw | float | no | Soft demand cap (kW), omit or null=disabled | [0, +∞) | - |
+    | demand_penalty | float | no | Overage penalty (per kWh) | [0, +∞) | 200.0 |
+    | c_cycle | float | no | Cycle penalty (per kWh throughput) | [0, +∞) | 0.02 |
 
   - Body params
 
@@ -148,7 +152,7 @@
       | ems_lcost | array | yes | BESS local cost list | [0.5, 0.6] |
       | ems_to_grid | array | yes | BESS to grid price list | [0.6, 0.7] |
 
-  - Mode: 1 = max BESS profit, 2 = max site profit, 3 = max green profit
+  - Mode (int): 1 = max BESS profit, 2 = max site profit, 3 = max green profit
 
 - Response
 

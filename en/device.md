@@ -21,7 +21,14 @@
       | max_power | float | no | Max power (kW) | (0, +∞) | 50.0 |
       | energy_conversion_efficiency | float | no | Conversion efficiency (%) | (0, 100] | 85.5 |
       | max_soc | float | no | Max SOC (%) | (0, 100] | 90.0 |
-      | min_soc | float | no | Min SOC (%) | (0, 100] | 10.0 |
+      | min_soc | float | no | Min SOC (%) | [0, 100] | 10.0 |
+      | panel_tilt | float | no | Panel tilt (°): horizontal=0, vertical=90 (PV) | [0, 90] | 30.0 |
+      | panel_azimuth | float | no | Panel azimuth (°), GIS: N=0, E=90, S=180, W=270 (PV) | [0, 360) | 180.0 |
+
+      Optional fields by type:
+      - **PV**: required suggested: `total_capacity`, `max_power`; optional: `panel_tilt`, `panel_azimuth`
+      - **BESS**: required suggested: `total_capacity`, `max_power`, `energy_conversion_efficiency`, `min_soc`, `max_soc`
+      - **Load**: no extra required
 
     - Example
 
@@ -32,9 +39,8 @@
         "site_id": 1,
         "total_capacity": 100.0,
         "max_power": 50.0,
-        "energy_conversion_efficiency": 85.5,
-        "max_soc": 90.0,
-        "min_soc": 10.0
+        "panel_tilt": 30.0,
+        "panel_azimuth": 180.0
       }
       ```
 
@@ -53,6 +59,8 @@
     | energy_conversion_efficiency | float | no | Conversion efficiency (%) | 85.5 |
     | max_soc | float | no | Max SOC (%) | 90.0 |
     | min_soc | float | no | Min SOC (%) | 10.0 |
+    | panel_tilt | float | no | Panel tilt (°) | 30.0 |
+    | panel_azimuth | float | no | Panel azimuth (°), GIS convention | 180.0 |
     | created_at | datetime | yes | Created at | "2025-01-06T10:00:00" |
     | updated_at | datetime | no | Updated at | "2025-01-06T10:00:00" |
 
@@ -66,9 +74,11 @@
       "site_id": 1,
       "total_capacity": 100.0,
       "max_power": 50.0,
-      "energy_conversion_efficiency": 85.5,
-      "max_soc": 90.0,
-      "min_soc": 10.0,
+      "energy_conversion_efficiency": null,
+      "max_soc": null,
+      "min_soc": null,
+      "panel_tilt": 30.0,
+      "panel_azimuth": 180.0,
       "created_at": "2025-01-06T10:00:00",
       "updated_at": null
     }
@@ -122,6 +132,8 @@
     | energy_conversion_efficiency | float | no | Conversion efficiency (%) | 85.5 |
     | max_soc | float | no | Max SOC (%) | 90.0 |
     | min_soc | float | no | Min SOC (%) | 10.0 |
+    | panel_tilt | float | no | Panel tilt (°) | 30.0 |
+    | panel_azimuth | float | no | Panel azimuth (°) | 180.0 |
     | created_at | datetime | yes | Created at | "2025-01-06T10:00:00" |
     | updated_at | datetime | no | Updated at | "2025-01-06T10:00:00" |
 
@@ -137,9 +149,11 @@
           "site_id": 1,
           "total_capacity": 100.0,
           "max_power": 50.0,
-          "energy_conversion_efficiency": 85.5,
-          "max_soc": 90.0,
-          "min_soc": 10.0,
+          "energy_conversion_efficiency": null,
+          "max_soc": null,
+          "min_soc": null,
+          "panel_tilt": 30.0,
+          "panel_azimuth": 180.0,
           "created_at": "2025-01-06T10:00:00",
           "updated_at": null
         }
@@ -187,7 +201,7 @@
 - Request
 
   - Path params: device_id
-  - Body params: partial fields (name, type, site_id, total_capacity, max_power, etc.)
+  - Body params: partial fields (name, type, site_id, total_capacity, max_power, energy_conversion_efficiency, max_soc, min_soc, panel_tilt, panel_azimuth)
 
 - Response
 

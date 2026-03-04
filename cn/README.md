@@ -9,6 +9,7 @@
 | [site.md](site.md) | 站点管理 | 站点的增删改查 |
 | [device.md](device.md) | 设备管理 | 设备的增删改查 |
 | [power.md](power.md) | 电力数据 | 功率记录、最大利润优化 |
+| [weather.md](weather.md) | 天气数据 | 天气与太阳辐射数据 |
 
 ---
 
