@@ -257,10 +257,19 @@
     | 参数 | 类型 | 是否必填 | 描述 | 样例 |
     | :---: | :---: | :------: | :---: | :---: |
     | result | array | 是 | 优化结果列表（每个时间段的功率值） | [10.5, 20.3] |
-    | details | object | 是 | 详细信息 | - |
+    | details | object | 是 | 功率流详细分解，每个数组长度与 result 一致 | - |
     | pv_supply | array | 是 | 光伏供应列表 | [50.0, 60.0] |
     | user_demand | array | 是 | 用户需求列表 | [30.0, 40.0] |
     | prices | object | 是 | 价格字典 | - |
+
+    details 对象包含：
+
+    | 参数 | 类型 | 是否必填 | 描述 | 样例 |
+    | :---: | :---: | :------: | :---: | :---: |
+    | charge_from_grid | array | 是 | 储能从电网充电功率列表 | [8.0, 0.0] |
+    | charge_from_pv | array | 是 | 储能从光伏充电功率列表；无光伏数据时为全 0 | [2.0, 20.0] |
+    | discharge_to_grid | array | 是 | 储能向电网放电功率列表 | [0.0, 0.1] |
+    | discharge_to_load | array | 是 | 储能向负载放电功率列表 | [0.5, 0.2] |
 
   - 样例
 
@@ -268,8 +277,10 @@
     {
       "result": [10.5, 20.3, 15.2],
       "details": {
-        "charge": [10.0, 20.0, 15.0],
-        "discharge": [0.5, 0.3, 0.2]
+        "charge_from_grid": [8.0, 0.0, 10.0],
+        "charge_from_pv": [2.0, 20.0, 5.0],
+        "discharge_to_grid": [0.0, 0.1, 0.0],
+        "discharge_to_load": [0.5, 0.2, 0.2]
       },
       "pv_supply": [50.0, 60.0, 55.0],
       "user_demand": [30.0, 40.0, 35.0],

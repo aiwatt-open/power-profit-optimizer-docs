@@ -161,10 +161,19 @@
     | Param | Type | Required | Description | Example |
     | :---: | :---: | :------: | :---: | :---: |
     | result | array | yes | Optimized power per period | [10.5, 20.3] |
-    | details | object | yes | Details (charge, discharge) | - |
+    | details | object | yes | Power flow details; each array has the same length as result | - |
     | pv_supply | array | yes | PV supply list | [50.0, 60.0] |
     | user_demand | array | yes | User demand list | [30.0, 40.0] |
     | prices | object | yes | Price dict | - |
+
+    details object fields:
+
+    | Param | Type | Required | Description | Example |
+    | :---: | :---: | :------: | :---: | :---: |
+    | charge_from_grid | array | yes | BESS charging power from grid | [8.0, 0.0] |
+    | charge_from_pv | array | yes | BESS charging power from PV; all 0 when there is no PV data | [2.0, 20.0] |
+    | discharge_to_grid | array | yes | BESS discharging power to grid | [0.0, 0.1] |
+    | discharge_to_load | array | yes | BESS discharging power to load | [0.5, 0.2] |
 
 - Error codes
 

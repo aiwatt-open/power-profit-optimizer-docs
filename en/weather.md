@@ -16,6 +16,8 @@
     | start_time | int | no | Start time (Unix timestamp, seconds) | - | 1736143200 |
     | end_time | int | no | End time (Unix timestamp, seconds) | - | 1736229599 |
     | is_forecast | bool | no | Filter by forecast: omit=all, false=historical, true=forecast | - | false |
+    | sort_by | string | no | Sort field | timestamp; default timestamp | timestamp |
+    | order | string | no | Sort direction | asc, desc; default asc | asc |
     | page | int | no | Page number | [1, +∞) | 1 |
     | page_size | int | no | Page size | [1, 500] | 10 |
 
@@ -93,6 +95,9 @@
     | site_id | int | yes | Site ID | (0, +∞) | 1 |
     | start_time | int | no | Start time (Unix timestamp, seconds) | - | 1736143200 |
     | end_time | int | no | End time (Unix timestamp, seconds) | - | 1736229599 |
+    | is_forecast | bool | no | Filter by forecast: omit=all, false=historical, true=forecast | - | false |
+    | sort_by | string | no | Sort field | timestamp; default timestamp | timestamp |
+    | order | string | no | Sort direction | asc, desc; default asc | asc |
     | page | int | no | Page number | [1, +∞) | 1 |
     | page_size | int | no | Page size | [1, 100] | 10 |
 
@@ -123,6 +128,7 @@
     | direct_normal_irradiance | float | no | Direct normal irradiance (W/m²) | 600.0 |
     | global_tilted_irradiance | float | no | Global tilted irradiance (W/m²) | 450.0 |
     | terrestrial_radiation | float | no | Terrestrial radiation (W/m²) | 1200.0 |
+    | is_forecast | bool | yes | Is forecast: false=historical, true=forecast | false |
     | created_at | datetime | yes | Created at | "2025-01-06T10:00:00" |
     | updated_at | datetime | no | Updated at | "2025-01-06T10:00:00" |
 
@@ -143,6 +149,7 @@
           "direct_normal_irradiance": 600.0,
           "global_tilted_irradiance": 450.0,
           "terrestrial_radiation": 1200.0,
+          "is_forecast": false,
           "created_at": "2025-01-06T10:00:00",
           "updated_at": null
         }

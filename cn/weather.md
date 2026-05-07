@@ -16,6 +16,8 @@
     | start_time | int | 否 | 开始时间（Unix 时间戳，秒） | - | 1736143200 |
     | end_time | int | 否 | 结束时间（Unix 时间戳，秒） | - | 1736229599 |
     | is_forecast | bool | 否 | 是否为预测数据，不传=全部，false=历史真实数据，true=预测数据 | - | false |
+    | sort_by | string | 否 | 排序字段 | timestamp；默认 timestamp | timestamp |
+    | order | string | 否 | 排序方向 | asc, desc；默认 asc | asc |
     | page | int | 否 | 页码 | [1, +∞) | 1 |
     | page_size | int | 否 | 每页记录数 | [1, 500] | 10 |
 
@@ -94,6 +96,8 @@
     | start_time | int | 否 | 开始时间（Unix 时间戳，秒） | - | 1736143200 |
     | end_time | int | 否 | 结束时间（Unix 时间戳，秒） | - | 1736229599 |
     | is_forecast | bool | 否 | 是否为预测数据，不传=全部，false=历史真实数据，true=预测数据 | - | false |
+    | sort_by | string | 否 | 排序字段 | timestamp；默认 timestamp | timestamp |
+    | order | string | 否 | 排序方向 | asc, desc；默认 asc | asc |
     | page | int | 否 | 页码 | [1, +∞) | 1 |
     | page_size | int | 否 | 每页记录数 | [1, 100] | 10 |
 
