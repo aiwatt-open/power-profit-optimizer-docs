@@ -144,13 +144,13 @@
 
       | Param | Type | Required | Description | Example |
       | :---: | :---: | :------: | :---: | :---: |
-      | pv_to_grid | array | yes | PV to grid price list | [0.5, 0.6] |
-      | pv_lcost | array | yes | PV local cost list | [0.4, 0.5] |
-      | grid_sel | array | yes | Grid price list | [0.8, 0.9] |
-      | ems_from_pv | array | yes | BESS from PV price list | [0.3, 0.4] |
-      | ems_from_grid | array | yes | BESS from grid price list | [0.7, 0.8] |
-      | ems_lcost | array | yes | BESS local cost list | [0.5, 0.6] |
-      | ems_to_grid | array | yes | BESS to grid price list | [0.6, 0.7] |
+      | pv_to_grid | array | mode=1/2 | PV sell-to-grid prices | - | [0.5, 0.6] |
+      | pv_lcost | array | mode=1/2 | Local PV consumption prices | - | [0.4, 0.5] |
+      | grid_sel | array | mode=1/2 | Grid prices | - | [0.8, 0.9] |
+      | ems_from_pv | array | mode=1/2 | BESS purchase from PV prices | - | [0.3, 0.4] |
+      | ems_from_grid | array | mode=1/2 | BESS purchase from grid prices | - | [0.7, 0.8] |
+      | ems_lcost | array | mode=1/2 | BESS local consumption prices | - | [0.5, 0.6] |
+      | ems_to_grid | array | mode=1/2 | BESS sell-to-grid prices | - | [0.6, 0.7] |
 
   - Mode (int): 1 = max BESS profit, 2 = max site profit, 3 = max green profit
 
@@ -179,7 +179,11 @@
 
   | HTTP Status | Code | Message |
   | :----: | :--: | :--: |
-  | 400 | 32001 | Device is not BESS |
-  | 400 | 32002 | Invalid price data |
-  | 404 | 20001 | Device not found |
-  | 500 | 50002 | Max profit optimization failed |
+  | 400 | 10001 | Invalid parameter | e.g. gap_minutes ≤ 0, invalid SOC bounds, demand_limit_profile length mismatch |
+  | 400 | 32001 | Device is not a BESS device | The device type is not BESS |
+  | 400 | 32002 | Invalid price data | Price series missing or lengths inconsistent |
+  | 400 | 32004 | Missing load prediction data | Load device has no prediction data; run load prediction first |
+  | 400 | 32005 | No PV device found | mode=3 requires at least one PV device on the site |
+  | 400 | 32006 | No PV prediction data | mode=3 requires PV prediction data; run PV prediction first |
+  | 404 | 20001 | Device not found | Invalid device ID |
+  | 500 | 50002 | Max profit optimization failed | Solver returned no solution |

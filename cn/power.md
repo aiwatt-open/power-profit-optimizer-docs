@@ -223,13 +223,13 @@
 
       | 参数 | 类型 | 是否必填 | 描述 | 范围 | 样例 |
       | :---: | :---: | :------: | :---: | :---: | :---: |
-      | pv_to_grid | array | 是 | 光伏向电网售电价格列表 | - | [0.5, 0.6] |
-      | pv_lcost | array | 是 | 光伏本地消纳价格列表 | - | [0.4, 0.5] |
-      | grid_sel | array | 是 | 电网电价列表 | - | [0.8, 0.9] |
-      | ems_from_pv | array | 是 | 储能从光伏购电价格列表 | - | [0.3, 0.4] |
-      | ems_from_grid | array | 是 | 储能从电网购电价格列表 | - | [0.7, 0.8] |
-      | ems_lcost | array | 是 | 储能本地消纳价格列表 | - | [0.5, 0.6] |
-      | ems_to_grid | array | 是 | 储能向电网售电价格列表 | - | [0.6, 0.7] |
+      | pv_to_grid | array | mode=1/2 必填 | 光伏向电网售电价格列表 | - | [0.5, 0.6] |
+      | pv_lcost | array | mode=1/2 必填 | 光伏本地消纳价格列表 | - | [0.4, 0.5] |
+      | grid_sel | array | mode=1/2 必填 | 电网电价列表 | - | [0.8, 0.9] |
+      | ems_from_pv | array | mode=1/2 必填 | 储能从光伏购电价格列表 | - | [0.3, 0.4] |
+      | ems_from_grid | array | mode=1/2 必填 | 储能从电网购电价格列表 | - | [0.7, 0.8] |
+      | ems_lcost | array | mode=1/2 必填 | 储能本地消纳价格列表 | - | [0.5, 0.6] |
+      | ems_to_grid | array | mode=1/2 必填 | 储能向电网售电价格列表 | - | [0.6, 0.7] |
 
     - 样例
 
@@ -300,7 +300,11 @@
 
   | HTTP状态码 | 错误码 | 描述 | 说明 |
   | :----: | :--: | :--: | ---- |
-  | 400 | 32001 | Device is not BESS | 设备不是储能设备 |
-  | 400 | 32002 | Invalid price data | 价格数据异常 |
+  | 400 | 10001 | Invalid parameter | 参数非法，如 gap_minutes ≤ 0、SOC 边界不合法、demand_limit_profile 长度不匹配 |
+  | 400 | 32001 | Device is not a BESS device | 设备类型不是储能设备 |
+  | 400 | 32002 | Invalid price data | 价格序列缺失或长度不一致 |
+  | 400 | 32004 | Missing load prediction data | 负载设备缺少预测数据，请先运行负载功率预测 |
+  | 400 | 32005 | No PV device found | mode=3 要求站点下至少存在一个光伏设备 |
+  | 400 | 32006 | No PV prediction data | mode=3 要求光伏预测数据，请先运行光伏功率预测 |
   | 404 | 20001 | Device not found | 设备ID无效 |
-  | 500 | 50002 | Max profit optimization failed | 优化算法执行失败 |
+  | 500 | 50002 | Max profit optimization failed | 优化求解器无解或执行失败 |
